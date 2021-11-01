@@ -17,23 +17,22 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<Person> people = new ArrayList<>();
         List<Product> products = new ArrayList<>();
-        String[] peopleTokens = reader.readLine().split(";");
-        String[] productsTokens = reader.readLine().split(";");
+        String[] peopleTokens = splitInputTokens(reader.readLine(), ";");
+        String[] productsTokens = splitInputTokens(reader.readLine(), ";");
         fillData(peopleTokens, Person.class, people);
         fillData(productsTokens, Product.class, products);
 
         String buyCommand = reader.readLine();
         while (!buyCommand.equals("END")) {
-            String[] tokens = buyCommand.split("\\s+");
+            String[] tokens = splitInputTokens(buyCommand, "\\s+");
             String person = tokens[0];
             String product = tokens[1];
             try {
                 Person foundPerson = findByGivenName(people, person).orElseThrow(NoSuchElementException::new);
                 Product foundProduct = findByGivenName(products, product).orElseThrow(NoSuchElementException::new);
                 foundPerson.buyProduct(foundProduct);
-            } catch (NoSuchElementException e) {
+            } catch (NoSuchElementException | IllegalStateException e) {
                 System.out.println(e.getMessage());
-                System.out.close();
             }
             buyCommand = reader.readLine();
         }
@@ -50,6 +49,10 @@ public class Main {
         people.forEach(printPeople);
     }
 
+    private static String[] splitInputTokens(String input, String splitter) {
+        return input.split(splitter);
+    }
+
     private static <E extends Naming> Optional<E> findByGivenName(List<E> list, String name) {
         return list.stream().filter(e -> e.getName().equals(name)).findFirst();
     }
@@ -57,8 +60,8 @@ public class Main {
     @SuppressWarnings("unchecked")
     private static <E> void fillData(String[] tokens, Class<E> eClass, List<E> list) {
         for (String token : tokens) {
-            String name = token.split("=")[0];
-            double money = Double.parseDouble(token.split("=")[1]);
+            String name = splitInputTokens(token, "=")[0];
+            double money = Double.parseDouble(splitInputTokens(token, "=")[1]);
             try {
                 if (eClass.getSimpleName().equals("Person")) {
                     list.add((E) new Person(name, money));
