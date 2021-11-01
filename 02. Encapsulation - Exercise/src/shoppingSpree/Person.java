@@ -34,7 +34,7 @@ public class Person implements Naming {
             this.money -= product.getCost();
             System.out.printf("%s bought %s\n", this.name, product.getName());
         } else {
-            System.out.printf("%s can't afford %s\n", this.name, product.getName());
+            throw new IllegalStateException(String.format("%s can't afford %s", this.name, product.getName()));
         }
     }
 
