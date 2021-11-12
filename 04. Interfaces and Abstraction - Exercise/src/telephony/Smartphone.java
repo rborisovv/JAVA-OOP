@@ -1,43 +1,51 @@
 package telephony;
 
+import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public record Smartphone(List<String> numbers,
-                         List<String> urls) implements Callable, Browsable {
+public final class Smartphone implements Callable, Browsable {
+    private final List<String> numbers;
+    private final List<String> urls;
+
+    public Smartphone(List<String> numbers,
+                      List<String> urls) {
+        this.numbers = numbers;
+        this.urls = urls;
+    }
 
     @Override
     public String browse() {
         String errorMessage = "Invalid URL!";
         String message = "Browsing: ";
-        Predicate<Character> predicate = Character::isDigit;
-        return accumulatePrintData(urls, predicate, errorMessage, message);
+        Pattern pattern = Pattern.compile("^[^0-9]+$");
+        return accumulatePrintData(urls, pattern, errorMessage, message, true);
     }
 
     @Override
     public String call() {
-        Predicate<Character> predicate = Character::isAlphabetic;
+        Pattern pattern = Pattern.compile("^[^A-Za-z]+$");
         String errorMessage = "Invalid number!";
         String message = "Calling... ";
-
-        return accumulatePrintData(numbers, predicate, errorMessage, message);
+        return accumulatePrintData(numbers, pattern, errorMessage, message, false);
     }
 
-    private String accumulatePrintData(List<String> data, Predicate<Character> predicate, String errorMessage, String message) {
+    private String accumulatePrintData(List<String> data, Pattern pattern, String errorMessage, String message, boolean placePostfix) {
         StringBuilder result = new StringBuilder();
-        for (String element : data) {
-            boolean containsCriteria = false;
-            char[] symbols = element.toCharArray();
-            for (char symbol : symbols) {
-                if (predicate.test(symbol)) {
-                    containsCriteria = true;
-                    break;
+        Iterator<String> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            String element = iterator.next();
+            Matcher matcher = pattern.matcher(element);
+            if (matcher.find()) {
+                result.append(message).append(element);
+                if (placePostfix) {
+                    result.append("!").append(System.lineSeparator());
+                } else {
+                    result.append(System.lineSeparator());
                 }
-            }
-            if (containsCriteria) {
-                result.append(errorMessage).append(System.lineSeparator());
             } else {
-                result.append(message).append(element).append(System.lineSeparator());
+                result.append(errorMessage).append(System.lineSeparator());
             }
         }
         return result.toString().trim();

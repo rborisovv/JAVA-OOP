@@ -17,7 +17,7 @@ public class Main {
 
         Smartphone smartphone = new Smartphone(numbers, urls);
         System.out.println(smartphone.call());
-        System.out.println(smartphone.browse());
+        System.out.print(smartphone.browse());
     }
 
     private static List<String> initializeCollection() throws IOException {
