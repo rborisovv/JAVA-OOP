@@ -3,7 +3,7 @@ package vehicles;
 import java.text.DecimalFormat;
 
 public class Bus extends VehicleImpl {
-    static final double BUSS_INCREASED_CONSUMPTION = 1.4;
+    static final double BUS_INCREASED_CONSUMPTION = 1.4;
 
     public Bus(double fuelQuantity, double fuelConsumption, double tankCapacity) {
         super(fuelQuantity, fuelConsumption, tankCapacity);
