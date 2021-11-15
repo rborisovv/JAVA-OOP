@@ -9,7 +9,7 @@ public abstract class VehicleImpl implements Vehicle {
             (vehicle, kilometers) -> String.format("%s travelled %s km", vehicle, kilometers);
     protected static final Function<String, String> VEHICLE_NEEDS_REFUELING_MSG =
             vehicle -> String.format("%s needs refueling", vehicle);
-
+  
     private static final String FUEL_TANK_LESS_THAN_ZERO_MSG = "Fuel must be a positive number";
     private static final String FUEL_MORE_THAN_TANK_CAPACITY_MSG = "Cannot fit fuel in tank";
 
