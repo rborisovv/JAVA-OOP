@@ -14,27 +14,36 @@ public class MessageLogger implements Logger {
     }
 
     @Override
-    public void logInfo(String message) throws IOException {
-        System.out.println(appender.append(ReportLevel.INFO, message));
+    public void logInfo(String message) {
+        logToConsole(ReportLevel.INFO, message);
     }
 
     @Override
-    public void logWarning(String message) throws IOException {
-        System.out.println(appender.append(ReportLevel.WARNING, message));
+    public void logWarning(String message) {
+        logToConsole(ReportLevel.WARNING, message);
     }
 
     @Override
-    public void logError(String message) throws IOException {
-        System.out.println(appender.append(ReportLevel.ERROR, message));
+    public void logError(String message) {
+        logToConsole(ReportLevel.ERROR, message);
     }
 
     @Override
-    public void logCritical(String message) throws IOException {
-        System.out.println(appender.append(ReportLevel.CRITICAL, message));
+    public void logCritical(String message) {
+        logToConsole(ReportLevel.CRITICAL, message);
     }
 
     @Override
-    public void logFatal(String message) throws IOException {
-        System.out.println(appender.append(ReportLevel.FATAL, message));
+    public void logFatal(String message) {
+        logToConsole(ReportLevel.FATAL, message);
+    }
+
+    public void logToConsole(ReportLevel reportLevel, String message) {
+        try {
+            String formattedMessage = appender.append(reportLevel, message);
+            System.out.println(formattedMessage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
