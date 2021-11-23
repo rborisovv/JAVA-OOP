@@ -1,1 +1,5 @@
-2021/11/23 12:09:04 PM - CRITICAL - Server is down!
+<log>
+<date>23/11/2021 12:50:56 PM</date>
+<level>FATAL</level>
+<message>Server is down!</message>
+</log>
