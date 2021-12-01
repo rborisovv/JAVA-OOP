@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class HealthFoodRepositoryImpl implements HealthFoodRepository<HealthyFood> {
-    private Collection<HealthyFood> foods;
+    private final Collection<HealthyFood> foods;
 
     public HealthFoodRepositoryImpl() {
         this.foods = new ArrayList<>();

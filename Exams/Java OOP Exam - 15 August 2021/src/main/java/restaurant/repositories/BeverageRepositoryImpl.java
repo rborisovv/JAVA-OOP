@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class BeverageRepositoryImpl implements BeverageRepository<Beverages> {
-    private Collection<Beverages> beverages;
+    private final Collection<Beverages> beverages;
 
     public BeverageRepositoryImpl() {
         this.beverages = new ArrayList<>();

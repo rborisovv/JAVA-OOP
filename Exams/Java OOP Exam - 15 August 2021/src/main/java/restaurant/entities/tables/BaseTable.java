@@ -12,10 +12,10 @@ import static restaurant.common.ExceptionMessages.*;
 public abstract class BaseTable implements Table {
     private Collection<HealthyFood> healthyFood;
     private Collection<Beverages> beverages;
-    private int number;
+    private final int number;
     private int size;
     private int numberOfPeople;
-    private double pricePerPerson;
+    private final double pricePerPerson;
     private boolean isReservedTable;
     private double allPeople;
 
@@ -73,8 +73,6 @@ public abstract class BaseTable implements Table {
         return this.allPeople;
     }
 
-    //TODO:
-
     @Override
     public void reserve(int numberOfPeople) {
         this.setNumberOfPeople(numberOfPeople);
@@ -104,7 +102,6 @@ public abstract class BaseTable implements Table {
         this.healthyFood = new ArrayList<>();
         this.beverages = new ArrayList<>();
         this.allPeople = 0;
-        this.pricePerPerson = 0;
         this.numberOfPeople = 0;
         this.isReservedTable = false;
     }
