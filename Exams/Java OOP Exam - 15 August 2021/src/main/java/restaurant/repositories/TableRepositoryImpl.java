@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class TableRepositoryImpl implements TableRepository<Table> {
-    private Collection<Table> tables;
+    private final Collection<Table> tables;
 
     public TableRepositoryImpl() {
         this.tables = new ArrayList<>();

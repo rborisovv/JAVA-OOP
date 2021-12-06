@@ -17,9 +17,9 @@ import restaurant.repositories.interfaces.*;
 import static restaurant.common.ExceptionMessages.*;
 
 public class ControllerImpl implements Controller {
-    private HealthFoodRepository<HealthyFood> healthFoodRepository;
-    private BeverageRepository<Beverages> beverageRepository;
-    private TableRepository<Table> tableRepository;
+    private final HealthFoodRepository<HealthyFood> healthFoodRepository;
+    private final BeverageRepository<Beverages> beverageRepository;
+    private final TableRepository<Table> tableRepository;
     private double totalMoney;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
@@ -31,19 +31,18 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addHealthyFood(String type, double price, String name) {
-        //TODO:
         Food food;
         switch (type) {
-            case "Salad":
+            case "Salad" -> {
                 food = new Salad(name, price);
                 existsInFoodRepository(name);
                 this.healthFoodRepository.add(food);
-                break;
-            case "VeganBiscuits":
+            }
+            case "VeganBiscuits" -> {
                 food = new VeganBiscuits(name, price);
                 existsInFoodRepository(name);
                 this.healthFoodRepository.add(food);
-                break;
+            }
         }
         return String.format(OutputMessages.FOOD_ADDED, name);
     }
@@ -56,19 +55,18 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addBeverage(String type, int counter, String brand, String name) {
-        //TODO:
         Beverages beverages;
         switch (type) {
-            case "Smoothie":
+            case "Smoothie" -> {
                 beverages = new Smoothie(name, counter, brand);
                 existsInBeverageRepository(brand, name);
                 this.beverageRepository.add(beverages);
-                break;
-            case "Fresh":
+            }
+            case "Fresh" -> {
                 beverages = new Fresh(name, counter, brand);
                 existsInBeverageRepository(brand, name);
                 this.beverageRepository.add(beverages);
-                break;
+            }
         }
         return String.format(OutputMessages.BEVERAGE_ADDED, type, brand);
     }
@@ -81,19 +79,18 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addTable(String type, int tableNumber, int capacity) {
-        //TODO:
         Table table;
         switch (type) {
-            case "Indoors":
+            case "Indoors" -> {
                 table = new Indoors(tableNumber, capacity);
                 existsInTableRepository(tableNumber);
                 this.tableRepository.add(table);
-                break;
-            case "InGarden":
+            }
+            case "InGarden" -> {
                 table = new InGarden(tableNumber, capacity);
                 existsInTableRepository(tableNumber);
                 this.tableRepository.add(table);
-                break;
+            }
         }
         return String.format(OutputMessages.TABLE_ADDED, tableNumber);
     }
@@ -106,7 +103,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String reserve(int numberOfPeople) {
-        //TODO:
         Table foundTable = this.tableRepository.getAllEntities()
                 .stream()
                 .filter(table -> !table.isReservedTable() && table.getSize() >= numberOfPeople)
@@ -120,7 +116,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String orderHealthyFood(int tableNumber, String healthyFoodName) {
-        //TODO:
         Table foundTable = this.tableRepository.byNumber(tableNumber);
         if (foundTable == null) {
             return String.format(OutputMessages.WRONG_TABLE_NUMBER, tableNumber);
@@ -135,7 +130,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String orderBeverage(int tableNumber, String name, String brand) {
-        //TODO:
         Table foundTable = this.tableRepository.byNumber(tableNumber);
         Beverages foundBeverages = this.beverageRepository.beverageByName(name, brand);
         if (foundTable == null) {
@@ -149,7 +143,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String closedBill(int tableNumber) {
-        //TODO:
         Table foundTable = this.tableRepository.byNumber(tableNumber);
         double bill = foundTable.bill();
         foundTable.clear();
@@ -160,7 +153,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String totalMoney() {
-        //TODO:
         return String.format(OutputMessages.TOTAL_MONEY, totalMoney);
     }
 }
